@@ -1,0 +1,87 @@
+****Definição das Tabelas
+Vendedores
+  - id_vendedor
+  - nome
+  - usuario
+  - senha
+
+Pedidos
+  - id_pedido
+  - vendedor
+  - valor
+
+Itens_pedidos
+  - id_item
+  - produto
+  - quantidade
+  - valor
+
+Produtos
+  - id_produto
+  - nome
+
+*****SQL para criar as tabelas
+create database pedidos
+
+create sequence vendedores_id_vendedor_seq
+	INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+
+create table vendedores (
+	id_vendedor int not null default nextval('vendedores_id_vendedor_seq'),
+	nome varchar(100),
+	usuario varchar(30),
+	senha varchar(12),
+	primary key (id_vendedor)
+)
+
+create sequence pedidos_id_pedidos_seq
+	INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+
+create table pedidos (
+	id_pedido int not null default nextval('pedidos_id_pedidos_seq'),
+	id_vendedor_fk int,
+	valor_total numeric(7),
+	primary key (id_pedido),
+	foreign key (id_vendedor_fk) references vendedores (id_vendedor)
+)
+
+create sequence produtos_id_produtos_seq
+	INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+
+create table produtos (
+	id_produto int not null default nextval('produtos_id_produtos_seq'),
+	nome varchar(50),	
+	primary key (id_produto)
+)
+
+create sequence itens_pedidos_id_item_seq
+	INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+
+create table itens_pedidos (
+	id_item int not null default nextval('itens_pedidos_id_item_seq'),
+	id_produto_fk int,
+	quantidade int,
+	valor numeric(7),
+	primary key (id_item),
+	foreign key (id_produto_fk) references produtos (id_produto)
+)
