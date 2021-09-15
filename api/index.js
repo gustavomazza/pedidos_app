@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 
 const app = express()
 const loginDb = require('./controllers/loginControllers')
-const port = 3010
+const pedidosDb = require('./controllers/pedidosControllers')
+
+const port = 3011
 const autenticacao = require('./middleware/login')
 
 
@@ -44,6 +46,9 @@ app.get('/', (req, res) => {
 
 //Rotas Login
 app.post('/login', loginDb.postUsuario)
+
+//Rotas Pedidos
+app.get('/pedidos', autenticacao.obrigatorio, pedidosDb.getPedidos)
 
 
 
