@@ -1,9 +1,9 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:pedidos_app/config/config.dart';
+import 'package:pedidos_app/app/config/config.dart';
 
-class LoginController {
+class LoginProvider {
   //Verifica se nome e senha estão corretos
   static login(String usuario, String senha) async {
     var urlApi = new Config();

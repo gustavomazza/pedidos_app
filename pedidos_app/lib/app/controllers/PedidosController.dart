@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:pedidos_app/Preferences/preferences.dart';
-import 'package:pedidos_app/config/config.dart';
-import 'package:pedidos_app/models/pedidos.dart';
+import 'package:pedidos_app/app/config/Config.dart';
+import 'package:pedidos_app/app/data/models/pedidos.dart';
 
 class PedidosController {
   static Future<dynamic> getPedidos() async {

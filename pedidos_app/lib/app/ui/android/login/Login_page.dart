@@ -1,67 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pedidos_app/Preferences/preferences.dart';
-import 'package:pedidos_app/controllers/LoginController.dart';
-import 'package:pedidos_app/models/usuario.dart';
-import 'package:pedidos_app/views/principal/Principal_page.dart';
+import 'package:pedidos_app/app/controllers/LoginPage_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  static String tag = 'login-page';
-
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _cUsuario = TextEditingController();
-  final TextEditingController _cSenha = TextEditingController();
-
-  @override
-  void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    super.initState();
-  }
-
-  void _login(_cUsuario, _cSenha) async {
-    //criando a instancia da classe Usuario
-    Usuario newUsuario = Usuario();
-
-    //A partir daqui é verificado usuário e senha utilizando a url padrão do cliente que foi salva
-    newUsuario.usuario = _cUsuario.toString();
-    newUsuario.senha = _cSenha.toString();
-
-    //Chamando LoginController para verificar usuário e senha
-    final statusLogin =
-        await LoginController.login(newUsuario.usuario, newUsuario.senha);
-
-    //Verificando resposta da api
-    if (statusLogin == 'Acesso Negado') {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text('Acesso Negado'), backgroundColor: Colors.red));
-    } else {
-      await Preferences.setUsuario(statusLogin['nome']);
-      print(Preferences.getUsuario);
-      await Preferences.setToken('Bearer ' + statusLogin['token']);
-      print('token ' + Preferences.getToken().toString());
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => PrincipalPage()));
-    }
-  }
-
-  void validacao() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Existem dados em branco!'),
-        backgroundColor: Colors.red));
-  }
+class LoginPage extends StatelessWidget {
+  LoginPageController controller = LoginPageController();
 
   @override
   Widget build(BuildContext context) {
     final inputUsuario = TextFormField(
-      controller: _cUsuario,
+      controller: controller.cUsuario,
       autofocus: false,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -72,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final inputSenha = TextFormField(
-      controller: _cSenha,
+      controller: controller.cSenha,
       autofocus: false,
       obscureText: true,
       decoration: InputDecoration(
@@ -86,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      key: _scaffoldKey,
+      key: controller.scaffoldkey,
       //O SingleChildScrollView faz com que ao abrir o teclado não ocorra o erro de Bottom overflowed
       body: SingleChildScrollView(
         child: Container(
@@ -156,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 //Conteúdo fora da parte laranja
                 Form(
-                  key: _formKey,
+                  key: controller.formkey,
                   child: Container(
                     // padding: EdgeInsets.only(top: 60),
                     padding: EdgeInsets.only(top: constraints.maxHeight * 0.15),
@@ -252,15 +199,16 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               onPressed: () => {
-                                if (_cUsuario.text.isEmpty ||
-                                    _cSenha.text.isEmpty)
+                                if (controller.cSenha.text.isEmpty ||
+                                    controller.cSenha.text.isEmpty)
                                   {
-                                    validacao(),
+                                    controller.validacao(),
                                   }
                                 else
                                   {
-                                    _login(_cUsuario.text.toUpperCase(),
-                                        _cSenha.text),
+                                    controller.login(
+                                        controller.cUsuario.text.toUpperCase(),
+                                        controller.cSenha.text),
                                   }
                               },
                             ),

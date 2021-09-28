@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pedidos_app/Preferences/preferences.dart';
-import 'package:pedidos_app/components/NavBar.dart';
-import 'package:pedidos_app/views/login/Login_page.dart';
+import 'package:pedidos_app/app/ui/android/components/NavBar.dart';
+import 'package:pedidos_app/app/ui/android/login/Login_page.dart';
 
 class Layout {
   static BuildContext scaffoldContext;

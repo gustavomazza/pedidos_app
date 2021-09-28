@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pedidos_app/views/principal/Principal_page.dart';
+import 'package:pedidos_app/app/ui/android/principal/Principal_page.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {
   // static String tag = 'principal-page';

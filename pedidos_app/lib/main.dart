@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pedidos_app/views/login/Login_page.dart';
-import 'package:pedidos_app/views/principal/Principal_page.dart';
+import 'package:get/route_manager.dart';
+import 'package:pedidos_app/app/routes/app_pages.dart';
+import 'package:pedidos_app/app/routes/app_routes.dart';
+import 'package:pedidos_app/app/ui/android/principal/Principal_page.dart';
 
 import 'Preferences/preferences.dart';
 
@@ -13,23 +15,20 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final routes = <String, WidgetBuilder>{
-    PrincipalPage.tag: (context) => PrincipalPage(),
-    // VendasComb.tag: (context) => VendasComb(),
-  };
+  // final routes = <String, WidgetBuilder>{
+  //   PrincipalPage.tag: (context) => PrincipalPage(),
+  //   // VendasComb.tag: (context) => VendasComb(),
+  // };
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //Fim calendário como português
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      getPages: AppPages.routes,
       title: 'Admin',
-      // theme: ThemeData(
-      //   primarySwatch: Layout.blue(),
-      // ),
-      home: LoginPage(),
-
-      routes: routes,
+      initialRoute: Routes.LOGIN,
+      // home: LoginPage(),
+      // routes: routes,
     );
   }
 }
